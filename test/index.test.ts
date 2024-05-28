@@ -11,7 +11,7 @@ import {
 import { eq } from 'prosemirror-test-builder'
 import { describe, it } from 'vitest'
 
-import { splitSplittableBlock } from '../dist'
+import { splitSplittableBlock } from '../src'
 
 type Tags = {
   [tag: string]: number
