@@ -1,7 +1,7 @@
 {
   "name": "prosemirror-splittable",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "packageManager": "pnpm@8.15.8",
   "description": "Inherit ProseMirror node attributes when splitting nodes.",
   "author": "ocavue <ocavue@gmail.com>",
