@@ -11,16 +11,15 @@ import { canSplit } from 'prosemirror-transform'
 declare module 'prosemirror-model' {
   export interface AttributeSpec {
     /**
-     * Whether the block can be split by the splitBlockAs command.
+     * Indicates if the block can be split using the `splitBlockAs` command.
      *
-     * If `splittable` is `true`, when the block is split by the
-     * `splitSplittableBlock` command, the attribute will be inherited to the
-     * new block, which might be a different type than the original block.
+     * When `splittable` is set to `true`, splitting the block with the
+     * `splitSplittableBlock` command will pass this attribute to the newly
+     * created block. This new block may be of a different type than the original.
      *
-     * In the schema, if multiple block types have the same splittable attribute
-     * with the same name, you need to make sure all of them have the same type
-     * and meaning, so that they can inherit the attribute value from a
-     * different type of block.
+     * If multiple block types in the schema share the same `splittable` attribute,
+     * ensure they are compatible in type and definition. This compatibility allows
+     * the attribute value to be correctly inherited across different block types.
      */
     splittable?: boolean
   }
