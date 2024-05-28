@@ -9,8 +9,7 @@ Extends [ProseMirror]'s [AttributeSpec] to allow for `splittable` property. `spl
 In the schema defined below, the `textAlign` attribute is defined as `splittable` for both `paragraph` and `heading` nodes.
 
 ```ts
-const { Schema } = require('prosemirror-model')
-const { splitSplittableBlock } = require('prosemirror-splittable')
+import { Schema } from 'prosemirror-model'
 
 const schema = new Schema({
   nodes: {
