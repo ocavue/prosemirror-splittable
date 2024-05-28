@@ -4,40 +4,46 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-importers:
-
-  .:
-    devDependencies:
-      '@antfu/ni':
-        specifier: ^0.21.12
-        version: 0.21.12
-      '@ocavue/eslint-config':
-        specifier: ^1.5.0
-        version: 1.5.0(@typescript-eslint/parser@7.8.0)(eslint@8.57.0)(typescript@5.4.5)
-      '@types/node':
-        specifier: ^20.12.8
-        version: 20.12.8
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      esno:
-        specifier: ^4.7.0
-        version: 4.7.0
-      prettier:
-        specifier: ^3.2.5
-        version: 3.2.5
-      tsup:
-        specifier: ^8.0.2
-        version: 8.0.2(typescript@5.4.5)
-      typescript:
-        specifier: ^5.4.5
-        version: 5.4.5
-      vite:
-        specifier: ^4.5.3
-        version: 4.5.3(@types/node@20.12.8)
-      vitest:
-        specifier: ^1.5.3
-        version: 1.5.3(@types/node@20.12.8)
+devDependencies:
+  '@antfu/ni':
+    specifier: ^0.21.12
+    version: 0.21.12
+  '@ocavue/eslint-config':
+    specifier: ^1.5.0
+    version: 1.5.0(@typescript-eslint/parser@7.8.0)(eslint@8.57.0)(typescript@5.4.5)
+  '@types/node':
+    specifier: ^20.12.8
+    version: 20.12.8
+  eslint:
+    specifier: ^8.57.0
+    version: 8.57.0
+  esno:
+    specifier: ^4.7.0
+    version: 4.7.0
+  prettier:
+    specifier: ^3.2.5
+    version: 3.2.5
+  prosemirror-model:
+    specifier: ^1.21.0
+    version: 1.21.0
+  prosemirror-state:
+    specifier: ^1.4.3
+    version: 1.4.3
+  prosemirror-transform:
+    specifier: ^1.9.0
+    version: 1.9.0
+  tsup:
+    specifier: ^8.0.2
+    version: 8.0.2(typescript@5.4.5)
+  typescript:
+    specifier: ^5.4.5
+    version: 5.4.5
+  vite:
+    specifier: ^4.5.3
+    version: 4.5.3(@types/node@20.12.8)
+  vitest:
+    specifier: ^1.5.3
+    version: 1.5.3(@types/node@20.12.8)
 
 packages:
 
@@ -3274,6 +3280,10 @@ packages:
       type-check: 0.4.0
     dev: true
 
+  /orderedmap@2.1.1:
+    resolution: {integrity: sha512-TvAWxi0nDe1j/rtMcWcIj94+Ffe6n7zhow33h40SKxmsmozs6dz/e+EajymfoFcHd7sxNn8yHM8839uixMOV6g==}
+    dev: true
+
   /p-limit@2.3.0:
     resolution: {integrity: sha512-//88mFWSJx8lxCzwdAABTJL2MyWB12+eIY7MDL2SqLmAkeKU9qxRvWuSyTjm3FUmpBEMuFfckAIqEaVGUDxb6w==}
     engines: {node: '>=6'}
@@ -3462,6 +3472,34 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
+    dev: true
+
+  /prosemirror-model@1.21.0:
+    resolution: {integrity: sha512-zLpS1mVCZLA7VTp82P+BfMiYVPcX1/z0Mf3gsjKZtzMWubwn2pN7CceMV0DycjlgE5JeXPR7UF4hJPbBV98oWA==}
+    dependencies:
+      orderedmap: 2.1.1
+    dev: true
+
+  /prosemirror-state@1.4.3:
+    resolution: {integrity: sha512-goFKORVbvPuAQaXhpbemJFRKJ2aixr+AZMGiquiqKxaucC6hlpHNZHWgz5R7dS4roHiwq9vDctE//CZ++o0W1Q==}
+    dependencies:
+      prosemirror-model: 1.21.0
+      prosemirror-transform: 1.9.0
+      prosemirror-view: 1.33.6
+    dev: true
+
+  /prosemirror-transform@1.9.0:
+    resolution: {integrity: sha512-5UXkr1LIRx3jmpXXNKDhv8OyAOeLTGuXNwdVfg8x27uASna/wQkr9p6fD3eupGOi4PLJfbezxTyi/7fSJypXHg==}
+    dependencies:
+      prosemirror-model: 1.21.0
+    dev: true
+
+  /prosemirror-view@1.33.6:
+    resolution: {integrity: sha512-zRLUNgLIQfd8IfGprsXxWTjdA8xEAFJe8cDNrOptj6Mop9sj+BMeVbJvceyAYCm5G2dOdT2prctH7K9dfnpIMw==}
+    dependencies:
+      prosemirror-model: 1.21.0
+      prosemirror-state: 1.4.3
+      prosemirror-transform: 1.9.0
     dev: true
 
   /punycode@2.1.1:
