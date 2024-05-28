@@ -1,0 +1,66 @@
+{
+  "name": "prosemirror-splittable",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@8.15.8",
+  "description": "",
+  "author": "ocavue <ocavue@gmail.com>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/ocavue",
+  "homepage": "https://github.com/ocavue/prosemirror-splittable#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ocavue/prosemirror-splittable.git"
+  },
+  "bugs": "https://github.com/ocavue/prosemirror-splittable/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "fix": "eslint --fix . && prettier --write .",
+    "prepublishOnly": "nr build",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@antfu/ni": "^0.21.12",
+    "@ocavue/eslint-config": "^1.5.0",
+    "@types/node": "^20.12.8",
+    "eslint": "^8.57.0",
+    "esno": "^4.7.0",
+    "prettier": "^3.2.5",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5",
+    "vite": "^4.5.3",
+    "vitest": "^1.5.3"
+  },
+  "renovate": {
+    "extends": [
+      "github>ocavue/config-renovate"
+    ]
+  }
+}
