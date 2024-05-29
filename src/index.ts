@@ -1,5 +1,11 @@
 /* eslint-disable prefer-const */
-import type { Attrs, NodeType, Node, ContentMatch } from 'prosemirror-model'
+import type {
+  Attrs,
+  NodeType,
+  Node,
+  ContentMatch,
+  ResolvedPos,
+} from 'prosemirror-model'
 import {
   AllSelection,
   TextSelection,
@@ -30,27 +36,26 @@ declare module 'prosemirror-model' {
  * attributes from the previous block.
  */
 export const splitSplittableBlock: Command = splitBlockAs(
-  (node, atEnd, type) => {
-    if (atEnd && type) {
-      const attrs = inheritSplittableAttrs(node, type)
-      if (attrs) {
-        return { type, attrs }
-      }
-    }
-    return null
+  (node, atEnd, $from) => {
+    if (!atEnd) return null
+
+    const defaultType =
+      $from.depth == 0
+        ? null
+        : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)))
+
+    if (!defaultType) return null
+
+    const attrs = inheritSplittableAttrs(node, defaultType)
+    return attrs ? { type: defaultType, attrs } : null
   },
 )
 
-// Copied from https://github.com/prosemirror/prosemirror-commands/blob/2da5f6621ab684b5b3b2a2982b8f91d293d4a582/src/commands.ts#L357
-// Add a `type` parameter to the `splitNode` function
-function splitBlockAs(
-  splitNode?: (
-    node: Node,
-    atEnd: boolean,
-    type: NodeType | null,
-  ) => { type: NodeType; attrs?: Attrs } | null,
+// Copied from unreleased https://github.com/prosemirror/prosemirror-commands/blob/7d0b6fe54bed7001f2e32a4eee3db946abaf4cf9/src/commands.ts#L357
+// prettier-ignore
+export function splitBlockAs(
+  splitNode?: (node: Node, atEnd: boolean, $from: ResolvedPos) => {type: NodeType, attrs?: Attrs} | null
 ): Command {
-  // prettier-ignore
   return (state, dispatch) => {
     let {$from, $to} = state.selection
     if (state.selection instanceof NodeSelection && state.selection.node.isBlock) {
@@ -65,20 +70,20 @@ function splitBlockAs(
       let atEnd = $to.parentOffset == $to.parent.content.size
       let tr = state.tr
       if (state.selection instanceof TextSelection || state.selection instanceof AllSelection) tr.deleteSelection()
-      let defaultType = $from.depth == 0 ? null : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)))
-      let splitType = splitNode && splitNode($to.parent, atEnd, defaultType)
-      let types = splitType ? [splitType] : atEnd && defaultType ? [{type: defaultType}] : undefined
+      let deflt = $from.depth == 0 ? null : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)))
+      let splitType = splitNode && splitNode($to.parent, atEnd, $from)
+      let types = splitType ? [splitType] : atEnd && deflt ? [{type: deflt}] : undefined
       let can = canSplit(tr.doc, tr.mapping.map($from.pos), 1, types)
-      if (!types && !can && canSplit(tr.doc, tr.mapping.map($from.pos), 1, defaultType ? [{type: defaultType}] : undefined)) {
-        if (defaultType) types = [{type: defaultType}]
+      if (!types && !can && canSplit(tr.doc, tr.mapping.map($from.pos), 1, deflt ? [{type: deflt}] : undefined)) {
+        if (deflt) types = [{type: deflt}]
         can = true
       }
       if (can) {
         tr.split(tr.mapping.map($from.pos), 1, types)
-        if (!atEnd && !$from.parentOffset && $from.parent.type != defaultType) {
+        if (!atEnd && !$from.parentOffset && $from.parent.type != deflt) {
           let first = tr.mapping.map($from.before()), $first = tr.doc.resolve(first)
-          if (defaultType && $from.node(-1).canReplaceWith($first.index(), $first.index() + 1, defaultType))
-            tr.setNodeMarkup(tr.mapping.map($from.before()), defaultType)
+          if (deflt && $from.node(-1).canReplaceWith($first.index(), $first.index() + 1, deflt))
+            tr.setNodeMarkup(tr.mapping.map($from.before()), deflt)
         }
       }
       dispatch(tr.scrollIntoView())
