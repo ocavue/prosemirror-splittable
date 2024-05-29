@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/ocavue/prosemirror-splittable/compare/v0.1.0...v0.1.1) (2024-05-29)
+
+
+### Code Refactoring
+
+* use unreleased code from prosemirror-commands ([#2](https://github.com/ocavue/prosemirror-splittable/issues/2)) ([ff5dc5b](https://github.com/ocavue/prosemirror-splittable/commit/ff5dc5bd619725faf648e2e12697facbf72ed31e))
+
 ## 0.1.0 (2024-05-28)
 
 
