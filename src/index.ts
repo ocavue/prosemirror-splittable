@@ -5,16 +5,16 @@ import type {
   Node,
   ContentMatch,
   ResolvedPos,
-} from 'prosemirror-model'
+} from "prosemirror-model";
 import {
   AllSelection,
   TextSelection,
   NodeSelection,
   type Command,
-} from 'prosemirror-state'
-import { canSplit } from 'prosemirror-transform'
+} from "prosemirror-state";
+import { canSplit } from "prosemirror-transform";
 
-declare module 'prosemirror-model' {
+declare module "prosemirror-model" {
   export interface AttributeSpec {
     /**
      * Indicates if the block can be split using the `splitBlockAs` command.
@@ -27,7 +27,7 @@ declare module 'prosemirror-model' {
      * ensure they are compatible in type and definition. This compatibility allows
      * the attribute value to be correctly inherited across different block types.
      */
-    splittable?: boolean
+    splittable?: boolean;
   }
 }
 
@@ -37,19 +37,19 @@ declare module 'prosemirror-model' {
  */
 export const splitSplittableBlock: Command = splitBlockAs(
   (node, atEnd, $from) => {
-    if (!atEnd) return null
+    if (!atEnd) return null;
 
     const defaultType =
       $from.depth == 0
         ? null
-        : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)))
+        : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)));
 
-    if (!defaultType) return null
+    if (!defaultType) return null;
 
-    const attrs = inheritSplittableAttrs(node, defaultType)
-    return attrs ? { type: defaultType, attrs } : null
+    const attrs = inheritSplittableAttrs(node, defaultType);
+    return attrs ? { type: defaultType, attrs } : null;
   },
-)
+);
 
 // Copied from unreleased https://github.com/prosemirror/prosemirror-commands/blob/7d0b6fe54bed7001f2e32a4eee3db946abaf4cf9/src/commands.ts#L357
 // prettier-ignore
@@ -96,33 +96,33 @@ export function splitBlockAs(
  * Return an attribute object that inherited from the previous node.
  */
 function inheritSplittableAttrs(prev: Node, type: NodeType): Attrs | null {
-  const prevAttrs = findSplittableAttrs(prev.type, true)
-  const nextAttrs = findSplittableAttrs(type, true)
-  const attrs = prevAttrs.filter((attr) => nextAttrs.includes(attr))
+  const prevAttrs = findSplittableAttrs(prev.type, true);
+  const nextAttrs = findSplittableAttrs(type, true);
+  const attrs = prevAttrs.filter((attr) => nextAttrs.includes(attr));
   if (attrs.length === 0) {
-    return null
+    return null;
   }
-  return Object.fromEntries(attrs.map((attr) => [attr, prev.attrs[attr]]))
+  return Object.fromEntries(attrs.map((attr) => [attr, prev.attrs[attr]]));
 }
 
 /**
  * Find all the splittable attributes in the given block type.
  */
 function findSplittableAttrs(type: NodeType, splittable: boolean): string[] {
-  const attrs: string[] = []
+  const attrs: string[] = [];
   for (const [attr, spec] of Object.entries(type.spec.attrs ?? {})) {
     if (spec.splittable === splittable) {
-      attrs.push(attr)
+      attrs.push(attr);
     }
   }
-  return attrs
+  return attrs;
 }
 
 // Copied from https://github.com/prosemirror/prosemirror-commands/blob/2da5f6621ab684b5b3b2a2982b8f91d293d4a582/src/commands.ts#L297
 function defaultBlockAt(match: ContentMatch) {
   for (let i = 0; i < match.edgeCount; i++) {
-    const { type } = match.edge(i)
-    if (type.isTextblock && !type.hasRequiredAttrs()) return type
+    const { type } = match.edge(i);
+    if (type.isTextblock && !type.hasRequiredAttrs()) return type;
   }
-  return null
+  return null;
 }
