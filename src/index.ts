@@ -1,17 +1,6 @@
 /* eslint-disable prefer-const */
-import type {
-  Attrs,
-  NodeType,
-  Node,
-  ContentMatch,
-  ResolvedPos,
-} from 'prosemirror-model'
-import {
-  AllSelection,
-  TextSelection,
-  NodeSelection,
-  type Command,
-} from 'prosemirror-state'
+import type { Attrs, NodeType, Node, ContentMatch, ResolvedPos } from 'prosemirror-model'
+import { AllSelection, TextSelection, NodeSelection, type Command } from 'prosemirror-state'
 import { canSplit } from 'prosemirror-transform'
 
 declare module 'prosemirror-model' {
@@ -35,21 +24,17 @@ declare module 'prosemirror-model' {
  * Split the block at the current selection, but try to inherit splittable
  * attributes from the previous block.
  */
-export const splitSplittableBlock: Command = splitBlockAs(
-  (node, atEnd, $from) => {
-    if (!atEnd) return null
+export const splitSplittableBlock: Command = splitBlockAs((node, atEnd, $from) => {
+  if (!atEnd) return null
 
-    const defaultType =
-      $from.depth == 0
-        ? null
-        : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)))
+  const defaultType =
+    $from.depth == 0 ? null : defaultBlockAt($from.node(-1).contentMatchAt($from.indexAfter(-1)))
 
-    if (!defaultType) return null
+  if (!defaultType) return null
 
-    const attrs = inheritSplittableAttrs(node, defaultType)
-    return attrs ? { type: defaultType, attrs } : null
-  },
-)
+  const attrs = inheritSplittableAttrs(node, defaultType)
+  return attrs ? { type: defaultType, attrs } : null
+})
 
 // Copied from unreleased https://github.com/prosemirror/prosemirror-commands/blob/7d0b6fe54bed7001f2e32a4eee3db946abaf4cf9/src/commands.ts#L357
 // prettier-ignore

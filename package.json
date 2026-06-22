@@ -2,7 +2,7 @@
   "name": "prosemirror-splittable",
   "type": "module",
   "version": "0.1.1",
-  "packageManager": "pnpm@8.15.8",
+  "packageManager": "pnpm@11.5.0",
   "description": "Inherit ProseMirror node attributes when splitting nodes.",
   "author": "ocavue <ocavue@gmail.com>",
   "license": "MIT",
@@ -34,17 +34,21 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "lint": "eslint .",
-    "fix": "eslint --fix . && prettier --write .",
-    "prepublishOnly": "nr build",
-    "start": "esno src/index.ts",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "lint": "pnpm run lint:eslint && pnpm run lint:oxfmt && pnpm run lint:knip",
+    "lint:oxfmt": "oxfmt --check",
+    "lint:eslint": "eslint",
+    "lint:knip": "knip",
+    "fix": "pnpm run fix:oxfmt && pnpm run fix:eslint",
+    "fix:oxfmt": "oxfmt",
+    "fix:eslint": "eslint --fix",
     "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc -b"
   },
   "peerDependencies": {
     "prosemirror-model": "^1.21.0",
@@ -52,37 +56,32 @@
     "prosemirror-transform": "^1.9.0"
   },
   "peerDependenciesMeta": {
-    "prosemirror-transform": {
-      "optional": true
-    },
     "prosemirror-model": {
       "optional": true
     },
     "prosemirror-state": {
       "optional": true
+    },
+    "prosemirror-transform": {
+      "optional": true
     }
   },
   "devDependencies": {
-    "@antfu/ni": "^0.21.12",
-    "@ocavue/eslint-config": "^1.5.0",
-    "@types/node": "^20.12.8",
-    "eslint": "^8.57.0",
-    "esno": "^4.7.0",
+    "@ocavue/eslint-config": "^4.8.1",
+    "@ocavue/tsconfig": "^0.7.1",
+    "@types/node": "^22.19.19",
+    "eslint": "^10.4.0",
     "ist": "^1.1.7",
-    "prettier": "^3.2.5",
+    "knip": "^6.14.2",
+    "oxfmt": "^0.53.0",
     "prosemirror-commands": "^1.5.2",
     "prosemirror-model": "^1.21.0",
     "prosemirror-state": "^1.4.3",
     "prosemirror-test-builder": "^1.1.1",
     "prosemirror-transform": "^1.9.0",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.5",
-    "vite": "^4.5.3",
-    "vitest": "^1.5.3"
-  },
-  "renovate": {
-    "extends": [
-      "github>ocavue/config-renovate"
-    ]
+    "tsdown": "^0.22.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7"
   }
 }

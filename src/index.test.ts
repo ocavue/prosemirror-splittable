@@ -1,6 +1,7 @@
 import ist from 'ist'
 import { splitBlock } from 'prosemirror-commands'
-import { Node, Schema } from 'prosemirror-model'
+import type { Node } from 'prosemirror-model'
+import { Schema } from 'prosemirror-model'
 import {
   EditorState,
   NodeSelection,
@@ -11,7 +12,7 @@ import {
 import { eq } from 'prosemirror-test-builder'
 import { describe, it } from 'vitest'
 
-import { splitSplittableBlock } from '../src'
+import { splitSplittableBlock } from './index.ts'
 
 type Tags = {
   [tag: string]: number
@@ -28,10 +29,7 @@ function selFor(doc: Node) {
   if (a != null) {
     const $a = doc.resolve(a)
     if ($a.parent.inlineContent)
-      return new TextSelection(
-        $a,
-        t(doc).b != null ? doc.resolve(t(doc).b) : undefined,
-      )
+      return new TextSelection($a, t(doc).b != null ? doc.resolve(t(doc).b) : undefined)
     else return new NodeSelection($a)
   }
   return Selection.atStart(doc)
@@ -73,9 +71,7 @@ describe('splitSplittableBlock', () => {
   })
 
   it('inherits attribute when creating default block', () => {
-    const doc = s.node('doc', null, [
-      s.node('heading', { textAlign: 'center' }, [s.text('hello')]),
-    ])
+    const doc = s.node('doc', null, [s.node('heading', { textAlign: 'center' }, [s.text('hello')])])
     ;(doc as TaggedNode).tag = { a: 6 }
 
     apply(
@@ -97,9 +93,7 @@ describe('splitSplittableBlock', () => {
   })
 
   it('inherits attribute when splitting a node from the middle', () => {
-    const doc = s.node('doc', null, [
-      s.node('heading', { textAlign: 'center' }, [s.text('hello')]),
-    ])
+    const doc = s.node('doc', null, [s.node('heading', { textAlign: 'center' }, [s.text('hello')])])
     ;(doc as TaggedNode).tag = { a: 5 }
 
     apply(

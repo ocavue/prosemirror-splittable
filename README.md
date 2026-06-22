@@ -42,8 +42,6 @@ const schema = new Schema({
 Later, we can use the `keymap` plugin to bind the `Enter` key to the `splitSplittableBlock` command.
 
 ```ts
-import { splitSplittableBlock } from 'prosemirror-splittable'
-import { keymap } from 'prosemirror-keymap'
 import {
   baseKeymap,
   chainCommands,
@@ -51,15 +49,12 @@ import {
   liftEmptyBlock,
   newlineInCode,
 } from 'prosemirror-commands'
+import { keymap } from 'prosemirror-keymap'
+import { splitSplittableBlock } from 'prosemirror-splittable'
 
 const customBaseKeymap = {
   ...baseKeymap,
-  Enter: chainCommands(
-    newlineInCode,
-    createParagraphNear,
-    liftEmptyBlock,
-    splitSplittableBlock,
-  ),
+  Enter: chainCommands(newlineInCode, createParagraphNear, liftEmptyBlock, splitSplittableBlock),
 }
 
 const plugin = keymap(customBaseKeymap)
