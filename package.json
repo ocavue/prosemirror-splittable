@@ -1,26 +1,27 @@
 {
-  "name": "@ocavue/starter-ts",
+  "name": "prosemirror-splittable",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "packageManager": "pnpm@11.5.0",
-  "description": "TypeScript starter kit",
+  "description": "Inherit ProseMirror node attributes when splitting nodes.",
   "author": "ocavue <ocavue@gmail.com>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/ocavue",
-  "homepage": "https://github.com/ocavue/starter-ts#readme",
+  "homepage": "https://github.com/ocavue/prosemirror-splittable#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ocavue/starter-ts.git"
+    "url": "https://github.com/ocavue/prosemirror-splittable.git"
   },
-  "bugs": "https://github.com/ocavue/starter-ts/issues",
+  "bugs": "https://github.com/ocavue/prosemirror-splittable/issues",
   "keywords": [],
   "sideEffects": false,
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
       "import": "./dist/index.js"
     }
   },
@@ -55,13 +56,32 @@
     "@types/node": "^22.19.19",
     "eslint": "^10.4.0",
     "knip": "^6.14.2",
+    "ist": "^1.1.7",
+    "prosemirror-commands": "^1.5.2",
+    "prosemirror-model": "^1.21.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-test-builder": "^1.1.1",
+    "prosemirror-transform": "^1.9.0",
     "oxfmt": "^0.53.0",
     "tsdown": "^0.22.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.14",
     "vitest": "^4.1.7"
   },
-  "publishConfig": {
-    "access": "public"
+  "peerDependencies": {
+    "prosemirror-model": "^1.21.0",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-transform": "^1.9.0"
+  },
+  "peerDependenciesMeta": {
+    "prosemirror-transform": {
+      "optional": true
+    },
+    "prosemirror-model": {
+      "optional": true
+    },
+    "prosemirror-state": {
+      "optional": true
+    }
   }
 }
