@@ -1,6 +1,6 @@
 import ist from 'ist'
 import { splitBlock } from 'prosemirror-commands'
-import type { Node} from 'prosemirror-model';
+import type { Node } from 'prosemirror-model'
 import { Schema } from 'prosemirror-model'
 import {
   EditorState,
